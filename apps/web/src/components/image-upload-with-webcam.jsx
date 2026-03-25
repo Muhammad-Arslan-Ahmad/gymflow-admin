@@ -14,7 +14,7 @@ export default function ImageUploadWithWebcam({
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
-  const { upload, uploading } = useUpload();
+  const [upload, { loading: uploading }] = useUpload();
 
   const startWebcam = async () => {
     try {

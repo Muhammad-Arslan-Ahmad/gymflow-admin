@@ -89,6 +89,11 @@ Notable custom plugins:
 - `stripe` → `./src/__create/stripe`
 - `@auth/create` → custom auth adapter
 
+## Frontend Documentation
+
+- `FRONTEND.md` — Quick-reference cheat sheet (colors, components, patterns)
+- `FRONTEND_REFERENCE.md` — Comprehensive 22-section design system audit (inconsistencies, anti-patterns, conventions, copy-from references). Read this when building new features.
+
 ## Conventions
 
 - Pages are `.jsx`, framework/config files are `.ts`/`.tsx`

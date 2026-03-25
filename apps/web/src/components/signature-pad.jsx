@@ -8,7 +8,7 @@ export default function SignaturePad({ value, onChange, label = "Signature" }) {
   const [isDrawing, setIsDrawing] = useState(false);
   const [hasDrawn, setHasDrawn] = useState(false);
   const canvasRef = useRef(null);
-  const { upload, uploading } = useUpload();
+  const [upload, { loading: uploading }] = useUpload();
 
   useEffect(() => {
     const canvas = canvasRef.current;

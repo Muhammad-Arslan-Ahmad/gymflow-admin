@@ -89,3 +89,4 @@ function useUpload() {
 }
 
 export default useUpload;
+export { useUpload };
