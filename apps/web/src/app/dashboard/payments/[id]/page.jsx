@@ -77,12 +77,12 @@ export default function PaymentShowPage({ params }) {
     <div className="space-y-6 max-w-4xl mx-auto">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <a
-            href="/dashboard/payments"
+          <button
+            onClick={() => navigate("/dashboard/payments")}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
           >
             <ChevronLeft className="h-5 w-5 text-gray-600" />
-          </a>
+          </button>
           <div>
             <h2 className="text-2xl font-bold text-gray-900">
               Payment Details
@@ -146,12 +146,12 @@ export default function PaymentShowPage({ params }) {
           <CardContent className="space-y-3">
             <div>
               <p className="text-sm text-gray-600">Member ID</p>
-              <a
-                href={`/dashboard/members/${payment.member_id}`}
+              <button
+                onClick={() => navigate(`/dashboard/members/${payment.member_id}`)}
                 className="font-semibold text-indigo-600 hover:text-indigo-700"
               >
                 #{payment.member_id}
-              </a>
+              </button>
             </div>
             <div>
               <p className="text-sm text-gray-600">Received By Staff ID</p>

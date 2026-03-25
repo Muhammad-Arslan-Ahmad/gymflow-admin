@@ -53,12 +53,12 @@ export default function NewInventoryCategoryPage() {
   return (
     <div className="space-y-6 max-w-2xl mx-auto">
       <div className="flex items-center gap-4">
-        <a
-          href="/dashboard/inventory"
+        <button
+          onClick={() => navigate("/dashboard/inventory")}
           className="p-2 hover:bg-gray-100 rounded-full transition-colors"
         >
           <ChevronLeft className="h-5 w-5 text-gray-600" />
-        </a>
+        </button>
         <h2 className="text-2xl font-bold text-gray-900">
           Add Inventory Category
         </h2>

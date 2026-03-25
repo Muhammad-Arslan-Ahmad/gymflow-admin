@@ -76,12 +76,12 @@ export default function EditStaffPage({ params }) {
   return (
     <div className="space-y-6 max-w-2xl mx-auto">
       <div className="flex items-center gap-4">
-        <a
-          href="/dashboard/staff"
+        <button
+          onClick={() => navigate("/dashboard/staff")}
           className="p-2 hover:bg-gray-100 rounded-full transition-colors"
         >
           <ChevronLeft className="h-5 w-5 text-gray-600" />
-        </a>
+        </button>
         <h2 className="text-2xl font-bold text-gray-900">Edit Staff Member</h2>
       </div>
 
@@ -165,8 +165,9 @@ export default function EditStaffPage({ params }) {
                   className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
                   <option value="">Select Role</option>
-                  <option value="MANAGER">Manager</option>
                   <option value="RECEPTIONIST">Receptionist</option>
+                  <option value="ADMIN">Admin</option>
+                  <option value="MANAGER">Manager</option>
                   <option value="CLEANER">Cleaner</option>
                   <option value="MAINTENANCE">Maintenance</option>
                   <option value="OTHER">Other</option>

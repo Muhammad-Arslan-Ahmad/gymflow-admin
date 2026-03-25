@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { PenTool, RotateCcw, X } from "lucide-react";
 import { useUpload } from "@/utils/useUpload";
+import { Button } from "@/components/ui/button";
 
 export default function SignaturePad({ value, onChange, label = "Signature" }) {
   const [isDrawing, setIsDrawing] = useState(false);
@@ -66,9 +67,9 @@ export default function SignaturePad({ value, onChange, label = "Signature" }) {
     const canvas = canvasRef.current;
     canvas.toBlob(async (blob) => {
       const file = new File([blob], "signature.png", { type: "image/png" });
-      const url = await upload(file);
-      if (url) {
-        onChange(url);
+      const result = await upload({ file });
+      if (result?.url) {
+        onChange(result.url);
       }
     }, "image/png");
   };
@@ -121,23 +122,21 @@ export default function SignaturePad({ value, onChange, label = "Signature" }) {
           </div>
 
           <div className="flex gap-2">
-            <button
-              type="button"
+            <Button
+              variant="secondary"
               onClick={clearSignature}
               disabled={!hasDrawn}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <RotateCcw size={16} />
+              <RotateCcw size={16} className="mr-1" />
               Clear
-            </button>
-            <button
-              type="button"
+            </Button>
+            <Button
               onClick={saveSignature}
               disabled={!hasDrawn || uploading}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              loading={uploading}
             >
               {uploading ? "Saving..." : "Save Signature"}
-            </button>
+            </Button>
           </div>
         </div>
       )}

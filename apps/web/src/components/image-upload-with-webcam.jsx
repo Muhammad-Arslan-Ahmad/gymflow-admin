@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Camera, Upload, X, Check } from "lucide-react";
 import { useUpload } from "@/utils/useUpload";
 
@@ -23,14 +23,18 @@ export default function ImageUploadWithWebcam({
       });
       setStream(mediaStream);
       setShowWebcam(true);
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
-      }
     } catch (err) {
       console.error("Error accessing webcam:", err);
       alert("Could not access webcam. Please check permissions.");
     }
   };
+
+  // Assign stream to video element after it mounts
+  useEffect(() => {
+    if (showWebcam && stream && videoRef.current) {
+      videoRef.current.srcObject = stream;
+    }
+  }, [showWebcam, stream]);
 
   const stopWebcam = () => {
     if (stream) {
@@ -55,9 +59,9 @@ export default function ImageUploadWithWebcam({
           const file = new File([blob], "webcam-photo.jpg", {
             type: "image/jpeg",
           });
-          const url = await upload(file);
-          if (url) {
-            onChange(url);
+          const result = await upload({ file });
+          if (result?.url) {
+            onChange(result.url);
             stopWebcam();
           }
         },
@@ -70,9 +74,9 @@ export default function ImageUploadWithWebcam({
   const handleFileUpload = async (e) => {
     const file = e.target.files?.[0];
     if (file) {
-      const url = await upload(file);
-      if (url) {
-        onChange(url);
+      const result = await upload({ file });
+      if (result?.url) {
+        onChange(result.url);
       }
     }
   };
@@ -107,7 +111,7 @@ export default function ImageUploadWithWebcam({
               ref={videoRef}
               autoPlay
               playsInline
-              className="w-80 h-60 rounded-lg border-2 border-blue-500 object-cover"
+              className="w-80 h-60 rounded-lg border-2 border-indigo-500 object-cover"
             />
             <canvas ref={canvasRef} className="hidden" />
           </div>

@@ -245,6 +245,30 @@ app.all('/integrations/:path{.+}', async (c, next) => {
   });
 });
 
+// Serve uploaded files from /uploads directory
+app.get('/uploads/:filename', async (c) => {
+  const filename = c.req.param('filename');
+  const fs = await import('node:fs');
+  const path = await import('node:path');
+  const filepath = path.resolve('uploads', filename);
+
+  if (!fs.existsSync(filepath)) {
+    return c.json({ error: 'File not found' }, 404);
+  }
+
+  const buffer = fs.readFileSync(filepath);
+  const ext = path.extname(filename).toLowerCase();
+  const mimeTypes: Record<string, string> = {
+    '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png',
+    '.gif': 'image/gif', '.webp': 'image/webp', '.pdf': 'application/pdf',
+    '.svg': 'image/svg+xml',
+  };
+
+  return new Response(buffer, {
+    headers: { 'Content-Type': mimeTypes[ext] || 'application/octet-stream' },
+  });
+});
+
 app.use('/api/auth/*', async (c, next) => {
   if (isAuthAction(c.req.path)) {
     return authHandler()(c, next);

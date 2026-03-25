@@ -15,6 +15,8 @@ export function Button({
       "bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500",
     secondary:
       "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 focus:ring-indigo-500",
+    outline:
+      "bg-white text-indigo-600 border border-indigo-300 hover:bg-indigo-50 focus:ring-indigo-500",
     danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",
     ghost: "bg-transparent text-gray-600 hover:bg-gray-100 focus:ring-gray-500",
   };

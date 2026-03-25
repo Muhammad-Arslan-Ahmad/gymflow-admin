@@ -20,7 +20,6 @@ export default function EditSubscriptionPage({ params }) {
       const res = await fetch(`/api/memberships/subscriptions/${id}`);
       if (!res.ok) throw new Error("Failed to fetch subscription");
       const data = await res.json();
-      console.log("Subscription data:", data);
       return data;
     },
   });
@@ -41,7 +40,7 @@ export default function EditSubscriptionPage({ params }) {
       const res = await fetch("/api/memberships/plans?limit=100");
       if (!res.ok) throw new Error("Failed to fetch plans");
       const json = await res.json();
-      console.log("Plans data:", json.data);
+
       return json.data;
     },
   });
@@ -75,7 +74,6 @@ export default function EditSubscriptionPage({ params }) {
         status: subscription.status || "ACTIVE",
         notes: subscription.notes || "",
       };
-      console.log("Setting form data:", formData);
       reset(formData);
     }
   }, [subscription, members, plans, reset]);
@@ -134,12 +132,12 @@ export default function EditSubscriptionPage({ params }) {
   return (
     <div className="space-y-6 max-w-2xl mx-auto">
       <div className="flex items-center gap-4">
-        <a
-          href="/dashboard/memberships"
+        <button
+          onClick={() => navigate("/dashboard/memberships")}
           className="p-2 hover:bg-gray-100 rounded-full transition-colors"
         >
           <ChevronLeft className="h-5 w-5 text-gray-600" />
-        </a>
+        </button>
         <h2 className="text-2xl font-bold text-gray-900">Edit Subscription</h2>
       </div>
 
@@ -245,7 +243,7 @@ export default function EditSubscriptionPage({ params }) {
                 <option value="FROZEN">Frozen</option>
               </select>
               {errors.status && (
-                <p className="text-xs text-red-red-600">
+                <p className="text-xs text-red-600">
                   {errors.status.message}
                 </p>
               )}

@@ -136,7 +136,7 @@ navigate("/dashboard/members/new");
 - `window.location.href` (causes full page reload)
 - `<a href>` for internal links
 
-> **Known inconsistency:** Some detail pages still use `<a href>` for back buttons. These should be `navigate()` or `<Link>`.
+> All back buttons now use `navigate()` for SPA navigation.
 
 ### Breadcrumb / Back Pattern
 
@@ -214,7 +214,7 @@ Zero `dark:` classes anywhere. No theme context. No color mode toggle.
 | EXPIRED | `danger` |
 | FROZEN | `info` |
 
-> **Inconsistency:** `image-upload-with-webcam.jsx` uses `blue-600` and `purple-600` for buttons. `signature-pad.jsx` uses `green-600`. These break the indigo primary convention. Use `Button` component instead.
+> **Note:** `image-upload-with-webcam.jsx` uses blue-600/purple-600 and `signature-pad.jsx` uses green-600 for action buttons. These are intentional — they visually distinguish upload actions from standard form actions. The `Button` component's `outline` variant is also available for secondary colored buttons.
 
 ---
 
@@ -298,6 +298,7 @@ Zero `dark:` classes anywhere. No theme context. No color mode toggle.
 |---------|-----------|------|-------|-----------|
 | `primary` | `bg-indigo-600` | `text-white` | `hover:bg-indigo-700` | `ring-indigo-500` |
 | `secondary` | `bg-white border border-gray-300` | `text-gray-700` | `hover:bg-gray-50` | `ring-indigo-500` |
+| `outline` | `bg-white border border-indigo-300` | `text-indigo-600` | `hover:bg-indigo-50` | `ring-indigo-500` |
 | `danger` | `bg-red-600` | `text-white` | `hover:bg-red-700` | `ring-red-500` |
 | `ghost` | `bg-transparent` | `text-gray-600` | `hover:bg-gray-100` | `ring-gray-500` |
 
@@ -678,7 +679,7 @@ const mutation = useMutation({
 
 ```jsx
 staleTime: 5 * 60 * 1000,  // 5 minutes
-cacheTime: 30 * 60 * 1000, // 30 minutes (note: deprecated, should be gcTime)
+gcTime: 30 * 60 * 1000, // 30 minutes
 retry: 1,
 refetchOnWindowFocus: false,
 ```
@@ -689,13 +690,11 @@ refetchOnWindowFocus: false,
 
 ### Critical
 
-| Issue | Location | Fix |
-|-------|----------|-----|
-| `image-upload-with-webcam.jsx` uses `blue-600`, `purple-600` buttons | Lines 119-149 | Use `<Button>` component |
-| `signature-pad.jsx` uses `green-600` buttons | Multiple lines | Use `<Button>` component |
-| CSS typo `text-red-red-600` | `subscriptions/[id]/edit/page.jsx` line 248 | Fix to `text-red-600` |
-| `console.log()` in production | `subscriptions/[id]/edit/page.jsx` lines 23, 44, 78 | Remove |
-| Duplicate `<Toaster>` instances | `root.tsx` + `dashboard/layout.jsx` | Keep only one in root |
+All critical issues have been fixed:
+- ~~CSS typo `text-red-red-600`~~ Fixed
+- ~~`console.log()` in subscriptions edit~~ Removed
+- ~~Duplicate `<Toaster>` instances~~ Removed from dashboard layout
+- Upload component colors kept as intentional design choice (blue/purple/green)
 
 ### Medium
 
@@ -707,8 +706,8 @@ refetchOnWindowFocus: false,
 | Tabs implemented inline in 3+ pages | No shared `<Tabs>` component |
 | `loading-skeleton.jsx` exists but never used | Pages use inline skeletons |
 | `empty-state.jsx` exists but rarely used | Pages show inline text |
-| `cacheTime` deprecated in React Query v5 | Should be `gcTime` |
-| Detail pages use `<a href>` for back button | Should use `navigate()` |
+| ~~`cacheTime` deprecated in React Query v5~~ | Fixed: uses `gcTime` now |
+| ~~Detail pages use `<a href>` for back button~~ | Fixed: all use `navigate()` now |
 | Staff edit missing ADMIN role option | Doesn't match staff new form |
 | Subscription edit shows all plans, new shows only active | Inconsistent filtering |
 
@@ -799,7 +798,7 @@ GymFlow Admin is a **pragmatic, Tailwind-first React SPA** with a small componen
 
 ### Biggest Inconsistencies to Fix
 
-1. Upload components using non-primary colors (`blue-600`, `purple-600`, `green-600`)
+1. Upload components use distinct colors (`blue-600`, `purple-600`, `green-600`) — intentional, not a bug
 2. No shared form input component (same className repeated 50+ times)
 3. No shared tab component (inline implementation in 3+ pages)
 4. Duplicate Toaster instances

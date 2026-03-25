@@ -275,6 +275,8 @@ The original project uses Neon serverless PostgreSQL. For local development, the
 - `__create/index.ts` — Same Pool detection for the auth adapter + `basePath: '/api/auth'` for local auth
 - `vite.config.ts` — SSR externals for `pg` module
 - `src/app/api/seed/route.js` — Seed endpoint (blocked in production)
+- `src/app/api/upload/route.js` — Local file upload endpoint (saves to `uploads/` directory)
+- `__create/index.ts` — Serves uploaded files at `/uploads/:filename`
 
 Navigation was converted from `window.location.href` to React Router's `useNavigate()` across all dashboard pages for SPA behavior (no full page reloads).
 
