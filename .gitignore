@@ -6,3 +6,4 @@ build/
 dist/
 *.local
 .DS_Store
+uploads/
